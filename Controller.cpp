@@ -40,7 +40,7 @@ int processFile(const char* fname){
 	}
 	//Now get the end time
 	clock_t end = clock();
-	std::cout << "Time: " << ((1000.0*CLOCKS_PER_SEC*(end - start))/wordlist.size()) << " ms per word" << std::endl;
+	std::cout << "Time: " << ((1000.0*(end - start)/CLOCKS_PER_SEC)/wordlist.size()) << " ms per word" << std::endl;
 
 	//Now we will print out the complete results. This could be REALLY clow, if
 	// your getNthPopular is not a little bit smart.
