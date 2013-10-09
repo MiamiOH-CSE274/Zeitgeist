@@ -41,6 +41,19 @@ Also, since this one is sequential, when re-assigning the array it saves time do
 
 
 
+Also have the possibility of implementing the jump method:
+
+jump = 1 + (key %(m-1))
+
+
+If{
+
+	Load factor = number of items/ number of spaces < 1/2
+
+	insert, remove, find should roughly equal O(1)
+
+}
+
 Background info
 ---------------
 Google trends (http://www.google.com/trends/hottrends) keeps track of the most popular search terms for a given day.  In this assignment you will design a data structure that could be used by Google to implement their “trends.”
