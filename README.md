@@ -4,6 +4,37 @@ Author
 Zeitgeist
 =======
 
+Ideas:
+
+Implement an array that is linked when searching NthPopular. Keep index of most and least popular, and upon addition, make comparisons
+to the least popular, and determine it's position from there.
+
+As far as collisions go, I will attempt to create a "scrapArray" that will not use LinkedList implementation to increase performance 
+when collisions do occur, that will simply save the index in this array of any colliding objects in that array. If a bucket has a very 
+large amount of collisions, this should increase performance quite a bit (although this most likely won't be a bottleneck unless the hashing
+function is bad, the array doesn't resize properly, or the data is so similar the hash function gives them similar results).
+
+For example, let's say dog, cat, and pig all go into bucket 1 of:
+[][][whale][][rabbit][snake][][]
+
+First, add dog:
+[dog][][whale][][rabbit][snake][][]
+
+Then, since there is something already we use the new scrapArray to store that. Since horse is already there, we make it bucket 2 and store that value with the dog, so it knows
+where to look in that scrapArray
+[][][whale][][rabbit][snake][][]
+[horse][cat][][]
+
+Since there is still something in bucket 1, add it again to that scrapArray
+[][][whale][][rabbit][snake][][]
+[horse][cat][pig][]
+
+
+The scrapArray only needs to be half the size of backingArray, since the main array grows at half, and should grow automatically with the backingArray for simplicity.
+Also, since this one is sequential, when re-assigning the array it saves time do to having no gaps in the array, and the features of caching help.
+
+
+
 Background info
 ---------------
 Google trends (http://www.google.com/trends/hottrends) keeps track of the most popular search terms for a given day.  In this assignment you will design a data structure that could be used by Google to implement their “trends.”
