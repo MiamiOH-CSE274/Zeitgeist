@@ -15,18 +15,24 @@ large amount of collisions, this should increase performance quite a bit (althou
 function is bad, the array doesn't resize properly, or the data is so similar the hash function gives them similar results).
 
 For example, let's say dog, cat, and pig all go into bucket 1 of:
+
 [][][whale][][rabbit][snake][][]
 
 First, add dog:
+
 [dog][][whale][][rabbit][snake][][]
 
 Then, since there is something already we use the new scrapArray to store that. Since horse is already there, we make it bucket 2 and store that value with the dog, so it knows
 where to look in that scrapArray
+
 [][][whale][][rabbit][snake][][]
+
 [horse][cat][][]
 
 Since there is still something in bucket 1, add it again to that scrapArray
+
 [][][whale][][rabbit][snake][][]
+
 [horse][cat][pig][]
 
 
