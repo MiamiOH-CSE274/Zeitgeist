@@ -1,33 +1,72 @@
 #include "emrickgjTrends.h"
 
 
+
+
 /**
 *
 * Start my Class implementation
 *
 */
 
-emrickgjTrends::emrickgjTrends(){
 
+emrickgjTrends::emrickgjTrends(){
+	numOfEntries = 0;
+	numCollisions = 0;
+	dummyNode = new Data();
+	mainTableSize = 0;
+	collisionTableSize = 0;
+	mainTable = new Data[10];
+	collisionTable = new Data[5];
+
+	dummyNode -> data = (std::string)"";
 }
 
 emrickgjTrends::~emrickgjTrends(){
 
 }
 
-void emrickgjTrends::increaseCount(std::string search, int num){
+/**
+* Increase the count of the given string
+*/
+void increaseCount(std::string search, int num){
 
 }
 
-int emrickgjTrends::getCount(std::string search){
+/**
+* Returns the count of words for a given string
+*/
+int getCount(std::string search){
 	return 0;
 }
 
-std::string emrickgjTrends::getNthPopular(int key){
+/**
+* Return the string representation of the "Nth" popular item
+*/
+std::string getNthPopular(int key){
 	return "";
 }
 
-int emrickgjTrends::numEntries(){
-	return 0;
+/**
+* Get the number of entries in the overall hashtable, UNIQUE ones
+*/
+int numEntries(){
+	return emrickgjTrends::numOfEntries;
+}
+
+/**
+* Generate the Hash based on the String value given
+*/
+int generateHash(std::string value){
+	return -1;
+}
+
+/**
+* Find the data with the given key, if no such data exists, through an exception
+*/
+emrickgjTrends::Data* find(int key){
+	throw "Oopsie";
+
+	return new emrickgjTrends::Data();
 }
 
