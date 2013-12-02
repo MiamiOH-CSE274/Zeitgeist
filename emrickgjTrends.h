@@ -14,12 +14,12 @@ struct Data{
 
 };
 
-	int generateHash(std::string string);
+	virtual int generateHash(std::string string);
 
-	Data find(int key);
+	virtual Data* find(int key);
 
 
-	emrickgjTrends();
+    emrickgjTrends();
 
 	virtual ~emrickgjTrends();
 
@@ -31,15 +31,17 @@ struct Data{
 
 	virtual int numEntries();
 
+private:
+
 	//My Variables go here
-	static Data* mainTable;
-	static Data* collisionTable;
+	Data* mainTable;
+	Data* collisionTable;
 
-	static int numOfEntries;
-	static int mainTableSize;
-	static int numCollisions;
-	static int collisionTableSize;
+	int numOfEntries;
+	int mainTableSize;
+	int numCollisions;
+	int collisionTableSize;
 
-	static Data* dummyNode;
+	Data* dummyNode;
 	
 };
