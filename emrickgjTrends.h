@@ -39,9 +39,9 @@ struct Data{
 
 	virtual void grow();
 
-	virtual void insertNthPopular(Data item);
+	virtual void insertNthPopular(Data* item);
 
-	virtual void updateNthPopular(Data item);
+	virtual void updateNthPopular(Data* item);
 
 	virtual void removeItem(Data item);
 
