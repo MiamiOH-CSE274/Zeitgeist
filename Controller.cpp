@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 
 #include "emrickgjTrends.h" //You will need to change this to match your own class
 
@@ -29,18 +30,19 @@ int processFile(const char* fname){
 	std::vector<std::string> wordlist;
 	while(in >> s){
 		wordlist.push_back(s);
+		std::cout << "HEY: " << s << std::endl;
 	}
 
 	//We only want to time how long addToTrends takes, so we get
 	// the starting time, which is the clock time, in milliseconds
-	//***clock_t start = clock();
+	clock_t start = clock();
 	//Now add all the words to the Trends data structure
 	for(unsigned int i=0; i<wordlist.size(); i++){
 		tr->increaseCount(wordlist[i],1);
 	}
 	//Now get the end time
-	//***clock_t end = clock();
-	//***std::cout << "Time: " << ((1000.0*CLOCKS_PER_SEC*(end - start))/wordlist.size()) << " ms per word" << std::endl;
+	clock_t end = clock(); 
+	std::cout << "Time: " << ((1000.0*CLOCKS_PER_SEC*(end - start))/wordlist.size()) << " ms per word" << std::endl;
 
 	//Now we will print out the complete results. This could be REALLY clow, if
 	// your getNthPopular is not a little bit smart.
@@ -55,7 +57,7 @@ int processFile(const char* fname){
 
 	delete tr;
 
-	return 0;/****end - start;*/
+	return end - start;
 }
 
 /*
@@ -74,10 +76,10 @@ int main(){
 	//processFile("data/28885.txt");
 	processFile("data/46.txt");
 	//processFile("data/23684.txt");
-	processFile("data/1342.txt");
-	processFile("data/6130.txt");
-	processFile("data/4300.txt");
-	processFile("data/3090.txt");
+	//processFile("data/1342.txt");
+	//processFile("data/6130.txt");
+	//processFile("data/4300.txt");
+	//processFile("data/3090.txt");
 
 	return 0;
 }

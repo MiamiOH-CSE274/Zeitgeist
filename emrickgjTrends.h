@@ -16,7 +16,7 @@ struct Data{
 
 	virtual int generateHash(std::string string);
 
-	virtual Data* find(int key);
+	virtual Data* find(std::string key);
 
 
     emrickgjTrends();
@@ -24,12 +24,20 @@ struct Data{
 	virtual ~emrickgjTrends();
 
 	virtual void increaseCount(std::string, int amount);
+	 
+	virtual int addToTable(std::string, int amount);
 
 	virtual int getCount(std::string);
 
 	virtual std::string getNthPopular(int n);
 
 	virtual int numEntries();
+
+	virtual void grow();
+
+	virtual void insertNthPopular(Data item);
+
+	virtual void removeItem(Data item);
 
 private:
 
