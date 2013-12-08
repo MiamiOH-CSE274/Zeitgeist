@@ -30,7 +30,7 @@ int processFile(const char* fname){
 	std::vector<std::string> wordlist;
 	while(in >> s){
 		wordlist.push_back(s);
-		std::cout << "HEY: " << s << std::endl;
+		//std::cout << "HEY: " << s << std::endl;
 	}
 
 	//We only want to time how long addToTrends takes, so we get
@@ -38,6 +38,7 @@ int processFile(const char* fname){
 	clock_t start = clock();
 	//Now add all the words to the Trends data structure
 	for(unsigned int i=0; i<wordlist.size(); i++){
+		//std::cout << "Run: " << i << " Word: " << wordlist[i] << std::endl;
 		tr->increaseCount(wordlist[i],1);
 	}
 	//Now get the end time
@@ -73,8 +74,8 @@ int main(){
 	/* NOTE: You may want to comment some of these out!
 	 * Unless your program is very speedy on all operations some of these will never finish.
 	 */
-	//processFile("data/28885.txt");
-	processFile("data/46.txt");
+	processFile("data/28885.txt");
+	//processFile("data/46.txt");
 	//processFile("data/23684.txt");
 	//processFile("data/1342.txt");
 	//processFile("data/6130.txt");

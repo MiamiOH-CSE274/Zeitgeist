@@ -4,9 +4,13 @@ class emrickgjTrends : public Trends{
 public:
 
 struct Data{
+		//0 = Main, 1 = Collision
+		short table;
 		int key;
 		std::string data;
 		int nextPopularKey;
+		short nextPopularTable;
+		short lastPopularTable;
 		int lastPopularKey;
 		int nextCollisionKey;
 		int lastCollisionKey;
@@ -36,6 +40,8 @@ struct Data{
 	virtual void grow();
 
 	virtual void insertNthPopular(Data item);
+
+	virtual void updateNthPopular(Data item);
 
 	virtual void removeItem(Data item);
 

@@ -8,25 +8,21 @@
 int primes [] = {53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 
 		24593, 49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469, 
 		12582917, 25165843, 50331653, 100663319, 201326611, 402653189, 805306457, 
-		1610612741};
+		1610612741}; //Size is 26
 
 
 emrickgjTrends::emrickgjTrends(){
 	numOfEntries = 0;
 	numCollisions = 0;
 	dummyNode = new Data();
-	mainTableSize = 10;
-	collisionTableSize = 5;
-	mainTable = new Data[10];
-	collisionTable = new Data[5];
+	dummyNode -> nextPopularKey = -1;
+	dummyNode -> lastPopularKey = -1;
+	mainTableSize = 97;
+	collisionTableSize = 53;
+	mainTable = new Data[97];
+	collisionTable = new Data[53];
 
-	dummyNode -> data = (std::string)"";
-
-	std::cout << "1:" << generateHash("Hey") << std::endl;
-	std::cout << "2:" << generateHash("Gey") << std::endl;
-	std::cout << "3:" << generateHash("Way") << std::endl;
-	std::cout << "4:" << generateHash("Heys") << std::endl;
-	std::cout << "5:" << generateHash("Hiaasdf") << std::endl;
+	dummyNode -> data = (std::string)"-1";
 
 }
 
@@ -42,20 +38,44 @@ emrickgjTrends::~emrickgjTrends(){
 void emrickgjTrends::increaseCount(std::string search, int num){
 	//First search to see if the search term is in my data structure!
 
+	//std::cout << "Size: " << numOfEntries << " Search: " << search << " CollisionSize: " << numCollisions << std::endl;
+
 	int hash = generateHash(search);
 
 	if(mainTable[hash].data != search){
 		//Search Collision Table!
 
 		//If data is -1, or was 'deleted'
-		if(mainTable[hash].data == "-1"){
+		if(mainTable[hash].data == "-1" || mainTable[hash].data == ""){
+
+			mainTable[hash].data = search;
+			mainTable[hash].frequency = num;
+			mainTable[hash].nextCollisionKey = -1;
+			mainTable[hash].nextPopularKey = -1;
+			mainTable[hash].lastCollisionKey = -1;
+			mainTable[hash].lastPopularKey = -1;
+			mainTable[hash].table = 0;
+			mainTable[hash].key = hash;
+			numOfEntries++;
+			insertNthPopular(mainTable[hash]);
+
+			if(numOfEntries+1 >= mainTableSize){
+				//std::cout << "Am I growing?" << std::endl;
+				//std::cout << "Num Entries: " << numOfEntries << " Main Size: " << mainTableSize << std::endl;
+				grow();
+			}
 
 		}else{
+			//std::cout << "Collision!";
 
 			int index = mainTable[hash].nextCollisionKey;
+			
+			
+			//std::cout << "Index" << index;
 
 			//If the hash hasn't had a collision yet
 			if(index == -1){
+				//std::cout << "In loop" << std::endl;
 				int index = addToTable(search, num);
 
 				mainTable[hash].nextCollisionKey = index;
@@ -63,9 +83,16 @@ void emrickgjTrends::increaseCount(std::string search, int num){
 				return;
 			}
 
+				//std::cout << "Out loop" << std::endl;
+
 			//If the has has a previously existing collision
 			while(collisionTable[index].nextCollisionKey != -1){
 				index = collisionTable[index].nextCollisionKey;
+				if(collisionTable[index].data == search){
+					collisionTable[index].frequency += num;
+					updateNthPopular(collisionTable[index]);
+					return;
+				}
 			}
 
 			int tempIndex = addToTable(search, num);
@@ -73,7 +100,6 @@ void emrickgjTrends::increaseCount(std::string search, int num){
 			//If it resized and no longer goes in the collision table
 			if(tempIndex == -1) return;
 
-			//
 			collisionTable[index].nextCollisionKey = tempIndex;
 			insertNthPopular(collisionTable[tempIndex]);
 			return;
@@ -83,10 +109,9 @@ void emrickgjTrends::increaseCount(std::string search, int num){
 
 	}else{
 
-		//If there was no collision, simply add this data
-		mainTable[hash].data = search;
+		//If there was no collision, simply update this data
 		mainTable[hash].frequency += num;
-		insertNthPopular(mainTable[hash]);
+		updateNthPopular(mainTable[hash]);
 
 
 	}
@@ -106,7 +131,13 @@ int emrickgjTrends::addToTable(std::string search, int count){
 		numCollisions++;
 
 		collisionTable[numCollisions].data = search;
-		collisionTable[numCollisions].frequency += count;
+		collisionTable[numCollisions].frequency = count;
+		collisionTable[numCollisions].nextCollisionKey = -1;
+		collisionTable[numCollisions].nextPopularKey = -1;
+		collisionTable[numCollisions].lastCollisionKey = -1;
+		collisionTable[numCollisions].lastPopularKey = -1;
+		collisionTable[numCollisions].table = 1;
+		collisionTable[numCollisions].key = numCollisions;
 		return numCollisions;
 
 	}
@@ -119,6 +150,24 @@ int emrickgjTrends::addToTable(std::string search, int count){
 * Returns the count of words for a given string
 */
 int emrickgjTrends::getCount(std::string search){
+
+	int hash = generateHash(search);
+
+	if(mainTable[hash].data == search){
+		return mainTable[hash].frequency;
+	}else{
+		int index = mainTable[hash].nextCollisionKey;
+
+		while(true){
+			if(index == -1) return -1;
+			if(collisionTable[index].data == search) return collisionTable[index].frequency;
+
+			index = collisionTable[index].nextCollisionKey;
+
+		}
+
+	}
+
 	return 0;
 }
 
@@ -126,14 +175,30 @@ int emrickgjTrends::getCount(std::string search){
 * Return the string representation of the "Nth" popular item
 */
 std::string emrickgjTrends::getNthPopular(int key){
-	return "Hey";
+
+	Data temp = (dummyNode -> nextPopularTable == 0)? mainTable[dummyNode -> nextPopularKey] : collisionTable[dummyNode -> nextPopularKey];
+	if(temp.data == "-1") return NULL;
+	if(key >= numEntries()/2){ //Start from end
+		return "";
+	}else{
+
+		for(int i = 0; i < key; i++){
+			if(temp.nextPopularKey == -1) return "";
+			temp = (temp.nextPopularTable == 0)? mainTable[temp.nextPopularKey] : collisionTable[temp.nextPopularKey];
+		}
+
+
+	}
+	return temp.data;
+
+
 }
 
 /**
 * Get the number of entries in the overall hashtable, UNIQUE ones
 */
 int emrickgjTrends::numEntries(){
-	return numOfEntries;
+	return numOfEntries + numCollisions;
 }
 
 /**
@@ -152,6 +217,16 @@ int emrickgjTrends::generateHash(std::string value){
 }
 
 void emrickgjTrends::insertNthPopular(Data item){
+	if(dummyNode -> nextPopularKey == -1){
+		dummyNode -> nextPopularKey = item.key;
+		dummyNode -> nextPopularTable = item.table;
+		dummyNode -> lastPopularKey = item.key;
+		dummyNode -> lastPopularTable = item.table;
+		return;
+	}
+}
+
+void emrickgjTrends::updateNthPopular(Data item){
 
 }
 
@@ -159,6 +234,50 @@ void emrickgjTrends::insertNthPopular(Data item){
 * Grow the Arrays
 */
 void emrickgjTrends::grow(){
+
+	std::cout << "Grow!" << std::endl;
+
+	//First let's get the next prime number
+	int i = 0;
+
+	//26 is the array size, we don't want to overshoot (if it gets that big) so less than 25
+	for(i = 0; i < 25; i++){
+		if(primes[i] == mainTableSize) break;
+		//std::cout << "I: " << i << std::endl;
+	}
+	i++;
+
+	Data* tempMainTable = mainTable;
+	int tempMainTableSize = mainTableSize;
+	mainTable= new Data[primes[i+1]];
+	Data* tempCollisionTable = collisionTable;
+	int tempCollisionTableSize = collisionTableSize;
+	collisionTable = new Data[primes[i]];
+	mainTableSize = primes[i+1];
+	collisionTableSize = primes[i];
+	delete dummyNode;
+	dummyNode = new Data();
+	dummyNode -> data = "-1";
+	dummyNode -> nextPopularKey = -1;
+	dummyNode -> lastPopularKey = -1;
+	numOfEntries = 0;
+	numCollisions = 0;
+
+
+	for(int i = 0; i < tempMainTableSize; i++){
+		if(tempMainTable[i].data != "-1" && tempMainTable[i].data != ""){
+			increaseCount(tempMainTable[i].data, tempMainTable[i].frequency);
+		}
+	}
+	for(int i = 0; i < tempCollisionTableSize; i++){
+		if(tempCollisionTable[i].data != "-1" && tempCollisionTable[i].data != ""){
+			increaseCount(tempMainTable[i].data, tempMainTable[i].frequency);
+		}
+	}
+
+	delete[] tempMainTable;
+	delete[] tempCollisionTable;
+
 
 }
 
