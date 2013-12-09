@@ -127,4 +127,4 @@ The video should certainly be less than 2 minutes long. I (or the grading assist
 
 #### 1. Give the link to your portfolio video on YouTube.
 
-TODO
+ http://youtu.be/ov92ZW9RdjQ
