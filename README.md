@@ -88,15 +88,29 @@ Questions
 
 #### 1. Which type of data structure did you choose? Explain, in English, the main ideas behind your data structure.
 
-TODO
+The data structure I chose was a combination of a Hash Table and a Linked list. The search terms would each have a hash generated, and then checked into the hash table. If a value is present, and it doesn't match, it will then convert to a sort of linked list in that bucket, in which it will traverse the list until it finds it's index and increment it, or until it reaches the end in which case it will add itself to the end of the list!
 
 #### 2. Explain, in English, the worst-case running time of each of your methods, along with a justification of your claims.
 
-TODO
+The worst time for increasingCount is O(n), gettingEntries is O(1), getCount is O(n) and getNthPopular is O(n). gettingEntries is obviously constant because of how I set up the class in which it will record it's size every time an entry is added.
+
+The two methods that are arguably much faster than O(n) in a standard situation, would be the increaseCount and getCount methods, as they involve a hashing function. The hash function itself is very efficient from what I tested, and does a good job of keeping collisions somewhat small. But if there is a collision, it converts itself to a linked list and then records collisions side by side in another array, for easy iteration later on. Because of this, in order to have O(n) time, all entries would have to take up the same exact bucket in the hashtable, thus having the same hash. This is not very likely, and I'd be hard-pressed to find an example of this. 
+
+Because the hashing works so well, the actual time is much, much faster. Since these are the big functions in the program, this makes the overall program pretty fast. The slowest is obviously getNthPopular, which will take O(n) in worst case as it has to iterate through each index until it finds the nth term.
 
 #### 3. Is it the case that your algorithms actually run faster, in real life, than the worst-case bounds would suggest? Why does that happen? (Hint: Usually it is because the input you receive is special, not worst-case.)
 
-TODO
+Yes it is, as described in the last part, they typically will run faster as long as the hash function holds up to a reasonable standard. The worst case is O(n) time for two of my methods, where they will only end up that way if they all hold the same hash. Elsewise, they will run much faster and only handle necessary collisions. Because there is no jump function it doesn't cause extra collisions latter on, and items with the same hash will be stored together in the same bucket. 
+
+
+
+##NOTICE##
+
+As I will mention in my video, the getNthPopular() does not seem to be working correctly. The program is very fast, and I can finish all files without timing out or waiting too long, but there are a lot of weird bugs present that I cannot figure out why they exist.
+
+I believe they have something to do with how my pointers are setup, although I can't determine where my logic is wrong. I don't believe I am doing anything too different from my Linked List lab and previous projects I have done doing similar ideas, but for some reason it is wrong. 
+
+The rest of the program runs find, and fast, and can always get the most popular items to an extent, but sacrifices the accuracy of the program.
 
 
 Portfolio Video
