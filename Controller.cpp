@@ -9,8 +9,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 
-#include "brinkmwjTrends.h" //You will need to change this to match your own class
+#include "emrickgjTrends.h" //You will need to change this to match your own class
 
 /*
  * processFile should:
@@ -20,7 +21,7 @@
  *  4) Use getNthPopular and getCount to print out the total results in fname + ".out"
  */
 int processFile(const char* fname){
-	Trends* tr = new brinkmwjTrends(); //You will need to change this to match your own class!
+	Trends* tr = new emrickgjTrends(); //You will need to change this to match your own class!
 
 	//First, read in the file
 	// I'm not doing much error checking here, because I am a bad person
@@ -29,6 +30,7 @@ int processFile(const char* fname){
 	std::vector<std::string> wordlist;
 	while(in >> s){
 		wordlist.push_back(s);
+		//std::cout << "HEY: " << s << std::endl;
 	}
 
 	//We only want to time how long addToTrends takes, so we get
@@ -36,10 +38,11 @@ int processFile(const char* fname){
 	clock_t start = clock();
 	//Now add all the words to the Trends data structure
 	for(unsigned int i=0; i<wordlist.size(); i++){
+		//std::cout << "Run: " << i << " Word: " << wordlist[i] << std::endl;
 		tr->increaseCount(wordlist[i],1);
 	}
 	//Now get the end time
-	clock_t end = clock();
+	clock_t end = clock(); 
 	std::cout << "Time: " << ((1000.0*CLOCKS_PER_SEC*(end - start))/wordlist.size()) << " ms per word" << std::endl;
 
 	//Now we will print out the complete results. This could be REALLY clow, if
@@ -72,12 +75,12 @@ int main(){
 	 * Unless your program is very speedy on all operations some of these will never finish.
 	 */
 	processFile("data/28885.txt");
-	processFile("data/46.txt");
-	processFile("data/23684.txt");
-	processFile("data/1342.txt");
-	processFile("data/6130.txt");
-	processFile("data/4300.txt");
-	processFile("data/3090.txt");
+	//processFile("data/46.txt");
+	//processFile("data/23684.txt");
+	//processFile("data/1342.txt");
+	//processFile("data/6130.txt");
+	//processFile("data/4300.txt");
+	//processFile("data/3090.txt");
 
 	return 0;
 }
