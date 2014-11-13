@@ -5,7 +5,16 @@ Background info
 ---------------
 Google trends (http://www.google.com/trends/hottrends) keeps track of the most popular search terms for a given day.  In this assignment you will design a data structure that could be used by Google to implement their “trends.”
 
-Requirements
+Stages
+------
+
+1. Develop use cases (written description)
+2. Implement naive version of data structure
+3. Implement code to test run times of use cases, swap with classmates
+4. Implement real version(s) of data structure
+5. Evaluate your data structure version(s) using use cases
+
+Data Structure Requirements
 ------------
 Your data structure will support four operations:
 
@@ -13,12 +22,6 @@ Your data structure will support four operations:
 2.	`int getCount(string s)` – Used by Google to determine how many times a particular search term has been seen.
 3.	`string getNthPopular(int n)` – If n is 0, return the most popular search term. If n is 1, return the second most popular search term, if n is 2 return the third most popular search term … and so on.
 4.	`int numEntries()` – Return the number of entries in the data structure. There should be only one entry per unique string added via increaseCount, so if increaseCount(“the”,1) is called twice, this should only be one entry.
-
-Grading
--------
-There is a trade-off here between speed of `getNthPopular`, speed of `getCounts`, and complexity of the design. It is possible to get very good speed on both methods, but it will likely involve a data structure that is a combination of two. You may want to look, for example, at the LinkedHashMap structure of Java for some inspiration.
-
-Part of your grade for this project, if you include it in your Portfolio, will be based on the speed of your implementation.
 
 Suggested steps
 ---------------
