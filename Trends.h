@@ -31,20 +31,21 @@ public:
 	 * If the string "s" has not been added to the data structure yet, add it, and set its count to "amount"
 	 * If the string "s" already has an entry in your data structure, just increase the count by "amount"
 	 *
-	 * Usually, "amount" will be equal to 1. See Controller.cpp for an example of how it is used.
+	 * Usually, "amount" will be equal to 1. See main.cpp for an example of how it is used.
 	 */
 	virtual void increaseCount(std::string s, int amount) = 0;
 	
 	/*
-	 * Return the count for the given string.
+	 * Return the count for the given string. 0 if not present, of course.
 	 */
 	virtual int getCount(std::string s) = 0;
 	
 	/*
 	 * Return the nth most popular item, based on its count. If there is a tie, return the string that
-	 * comes first according to the the < operator for strings (that is, comes first alphabetically).
+	 * comes first according to the the < operator for strings (that is, comes first alphabetically). If n is
+	 * out of range, return ""
 	 */
-	virtual std::string getNthPopular(int n) = 0;
+	virtual std::string getNthPopular(unsigned int n) = 0;
 
 	/*
 	 * Return the total number of UNIQUE strings in the list. This will NOT be equal to the number of
@@ -52,5 +53,5 @@ public:
 	 * data structure more than once. This function is useful when looping through the results
 	 * using getNthPopular. If you do getNthPopular(numEntries()-1), it should get the least popular item
 	 */
-	virtual int numEntries() = 0;
+	virtual unsigned int numEntries() = 0;
 };
