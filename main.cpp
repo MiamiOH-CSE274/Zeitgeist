@@ -18,7 +18,7 @@
  * This tests a simple (but unlikely) use case, which is to read in all the data, and then print out the data in sorted order
  * based on popularity.
  *
- * You may want to try useCase_addAllThenGetInOrder.txt as input to make sure your data structure is actually working!
+ * Compare your 28885.txt.out to 28885_txt.out, using diff,s to see if your code is producing correct output.
  */
 double useCase_addAllThenGetInOrder(){
 	Trends* tr = new naiveTrends(); //You will need to change this to match your own class!
@@ -42,7 +42,7 @@ double useCase_addAllThenGetInOrder(){
 	std::ofstream out(outfname.c_str());
 
 	start = getTimeInMillis();
-	for(int i=0; i< tr->numEntries(); i++){
+	for(unsigned int i=0; i< tr->numEntries(); i++){
 		std::string s = tr->getNthPopular(i);
 		out << tr->getCount(s) << ": " << s << std::endl;
 	}
