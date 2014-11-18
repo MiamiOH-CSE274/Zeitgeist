@@ -1,7 +1,7 @@
 #include "naiveTrends.h"
 #include <algorithm>
 
-void naiveTrends::increaseCount(std::string s, int amount){
+void naiveTrends::increaseCount(std::string s, unsigned int amount){
 	//Check to see if word is already present
 	for (unsigned int i = 0; i < wordCountVector.size(); i++){
 		if (wordCountVector[i].first == s){
@@ -14,7 +14,7 @@ void naiveTrends::increaseCount(std::string s, int amount){
 	wordCountVector.push_back(std::make_pair(s, amount));
 }
 
-int naiveTrends::getCount(std::string s){
+unsigned int naiveTrends::getCount(std::string s){
 	//Check to see if word is present
 	for (unsigned int i = 0; i < wordCountVector.size(); i++){
 		if (wordCountVector[i].first == s){
@@ -26,7 +26,7 @@ int naiveTrends::getCount(std::string s){
 	return 0;
 }
 
-bool compareFunc(std::pair<std::string, int> i, std::pair<std::string, int> j) {
+bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j) {
 	if (i.second == j.second){
 		return (i.first < j.first);
 	}

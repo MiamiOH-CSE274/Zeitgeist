@@ -2,7 +2,7 @@
 
 class smarterTrends : public naiveTrends {
 public:
-	virtual void increaseCount(std::string s, int amount);
+	virtual void increaseCount(std::string s, unsigned int amount);
 	virtual std::string getNthPopular(unsigned int n);
 
 protected:

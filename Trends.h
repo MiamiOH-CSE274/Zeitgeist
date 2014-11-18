@@ -33,12 +33,12 @@ public:
 	 *
 	 * Usually, "amount" will be equal to 1. See main.cpp for an example of how it is used.
 	 */
-	virtual void increaseCount(std::string s, int amount) = 0;
+	virtual void increaseCount(std::string s, unsigned int amount) = 0;
 	
 	/*
 	 * Return the count for the given string. 0 if not present, of course.
 	 */
-	virtual int getCount(std::string s) = 0;
+	virtual unsigned int getCount(std::string s) = 0;
 	
 	/*
 	 * Return the nth most popular item, based on its count. If there is a tie, return the string that
