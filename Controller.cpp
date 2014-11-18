@@ -9,38 +9,33 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 
-#include "brinkmwjTrends.h" //You will need to change this to match your own class
+#include "naiveTrends.h" //You will need to change this to match your own class
+#include "utilities.h"
 
 /*
- * processFile should:
+ * sortByPopularity should:
  *  1) Create a new instance of your trends class
  *  2) Read in the file whose words you want to count: The file name is passed in as fname
  *  3) Add all words to the Trends data structure, and calculate the time per call to addtoTrends
  *  4) Use getNthPopular and getCount to print out the total results in fname + ".out"
  */
-int processFile(const char* fname){
-	Trends* tr = new brinkmwjTrends(); //You will need to change this to match your own class!
+double processFile(const char* fname){
+	Trends* tr = new naiveTrends(); //You will need to change this to match your own class!
 
-	//First, read in the file
-	// I'm not doing much error checking here, because I am a bad person
-	std::ifstream in(fname);
-	std::string s;
-	std::vector<std::string> wordlist;
-	while(in >> s){
-		wordlist.push_back(s);
-	}
+	std::vector<std::string> wordlist = getWordList(fname);
 
 	//We only want to time how long addToTrends takes, so we get
 	// the starting time, which is the clock time, in milliseconds
-	clock_t start = clock();
+	double start = getTimeInMillis();
 	//Now add all the words to the Trends data structure
 	for(unsigned int i=0; i<wordlist.size(); i++){
 		tr->increaseCount(wordlist[i],1);
 	}
 	//Now get the end time
-	clock_t end = clock();
-	std::cout << "Time: " << ((1000.0*(end - start)/CLOCKS_PER_SEC)/wordlist.size()) << " ms per word" << std::endl;
+	double end = getTimeInMillis();
+	std::cout << "Time: " << (end-start)/wordlist.size() << " ms per word" << std::endl;
 
 	//Now we will print out the complete results. This could be REALLY clow, if
 	// your getNthPopular is not a little bit smart.
