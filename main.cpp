@@ -14,17 +14,16 @@
 #include "naiveTrends.h" //You will need to change this to match your own class
 #include "utilities.h"
 
-/*
- * sortByPopularity should:
- *  1) Create a new instance of your trends class
- *  2) Read in the file whose words you want to count: The file name is passed in as fname
- *  3) Add all words to the Trends data structure, and calculate the time per call to addtoTrends
- *  4) Use getNthPopular and getCount to print out the total results in fname + ".out"
+/**
+ * This tests a simple (but unlikely) use case, which is to read in all the data, and then print out the data in sorted order
+ * based on popularity.
+ *
+ * You may want to try useCase_addAllThenGetInOrder.txt as input to make sure your data structure is actually working!
  */
-double processFile(const char* fname){
+double useCase_addAllThenGetInOrder(){
 	Trends* tr = new naiveTrends(); //You will need to change this to match your own class!
 
-	std::vector<std::string> wordlist = getWordList(fname);
+	std::vector<std::string> wordlist = getWordList("data/28885.txt");
 
 	//We only want to time how long addToTrends takes, so we get
 	// the starting time, which is the clock time, in milliseconds
@@ -35,18 +34,21 @@ double processFile(const char* fname){
 	}
 	//Now get the end time
 	double end = getTimeInMillis();
-	std::cout << "Time: " << (end-start)/wordlist.size() << " ms per word" << std::endl;
+	std::cout << "increaseCount time: " << (end-start)/wordlist.size() << " ms per word" << std::endl;
 
 	//Now we will print out the complete results. This could be REALLY clow, if
 	// your getNthPopular is not a little bit smart.
-	std::string outfname = fname;
-	outfname = outfname + ".out";
+	std::string outfname = "data/28885.txt.out";
 	std::ofstream out(outfname.c_str());
+
+	start = getTimeInMillis();
 	for(int i=0; i< tr->numEntries(); i++){
 		std::string s = tr->getNthPopular(i);
 		out << tr->getCount(s) << ": " << s << std::endl;
 	}
 	out.close();
+	end = getTimeInMillis();
+	std::cout << "getNth followed by getCount, time: " << (end - start) / tr->numEntries() << " ms per entry" << std::endl;
 
 	delete tr;
 
@@ -60,19 +62,10 @@ double processFile(const char* fname){
  */
 int main(){
 
-	/* These files are books from project Gutenberg. I have provided the inputs, as well as my outputs
+	/* The data files are books from project Gutenberg. I have provided the inputs, as well as my outputs
 	 * in the starter files */
 	
-	/* NOTE: You may want to comment some of these out!
-	 * Unless your program is very speedy on all operations some of these will never finish.
-	 */
-	processFile("data/28885.txt");
-	processFile("data/46.txt");
-	processFile("data/23684.txt");
-	processFile("data/1342.txt");
-	processFile("data/6130.txt");
-	processFile("data/4300.txt");
-	processFile("data/3090.txt");
+	useCase_addAllThenGetInOrder();
 
 	return 0;
 }
