@@ -9,6 +9,6 @@ public:
 	virtual std::string getNthPopular(unsigned int n);
 	virtual unsigned int numEntries();
 
-private:
+protected:
 	std::vector<std::pair<std::string, int> > wordCountVector;
 };

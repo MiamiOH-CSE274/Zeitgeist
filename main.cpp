@@ -11,7 +11,7 @@
 #include <vector>
 #include <time.h>
 
-#include "naiveTrends.h" //You will need to change this to match your own class
+#include "smarterTrends.h" //You will need to change this to match your own class
 #include "utilities.h"
 
 /**
@@ -21,7 +21,7 @@
  * Compare your 28885.txt.out to 28885_txt.out, using diff,s to see if your code is producing correct output.
  */
 double useCase_addAllThenGetInOrder(){
-	Trends* tr = new naiveTrends(); //You will need to change this to match your own class!
+	Trends* tr = new smarterTrends(); //You will need to change this to match your own class!
 
 	std::vector<std::string> wordlist = getWordList("data/28885.txt");
 
