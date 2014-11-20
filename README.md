@@ -23,7 +23,7 @@ Your data structure will support four operations:
 3.	`string getNthPopular(unsigned int n)` – If n is 0, return the most popular search term. If n is 1, return the second most popular search term, if n is 2 return the third most popular search term … and so on.
 4.	`unsigned int numEntries()` – Return the number of entries in the data structure. There should be only one entry per unique string added via increaseCount, so if increaseCount(“the”,1) is called twice, this should only be one entry.
 
-Stage 1: Due Tuesday 11/25, by 11:59pm
+Stage 1: Due Tuesday 11/25, by start of class
 --------------------------------------
 1. Download the starter code
 2. Create some additional use cases that measure running times of things: In particular, create a use case that shows that smarterTrends is still a very bad data structure.
