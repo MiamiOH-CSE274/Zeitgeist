@@ -34,7 +34,7 @@ Stage 1: Due Tuesday 11/25, by start of class
 See the naiveTrends and smarterTrends .h and .cpp for examples
 3. Implement all methods of your trends class. Don’t forget the constructor and destructor (if needed), as well as the methods inherited from Trends.
 
-Stage 2: Due Tuesday 12/2, by 11:59pm
+Stage 2: Due Thursday 12/4, by 11:59pm
 -------------------------------------
 1. Using github, find the Trends classes of at least two other teams
 2. Download their classes and test them using your use cases
